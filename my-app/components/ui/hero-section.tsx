@@ -21,7 +21,7 @@ export function HeroSection() {
         {/* badge */}
         <motion.span
           initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 3 }}
           transition={{ duration: 0.5 }}
           className="text-xs font-semibold tracking-widest uppercase text-[#6ee7b7] border border-[rgba(59,130,100,0.4)] rounded-full px-4 py-1 bg-[rgba(59,130,100,0.08)]"
         >

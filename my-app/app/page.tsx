@@ -27,7 +27,7 @@ export default function Home() {
       <HeroSection />
 
       {/* ── CHUNK 2 · Feature cards — pure static HTML, zero JS ── */}
-      <section className="flex flex-col items-center py-20 px-6 gap-12 min-h-screen justify-center">
+      <section className="flex flex-col items-center py-30 px-6 gap-12 min-h-screen justify-center">
         <h2 className="text-3xl md:text-4xl font-bold text-white/90 text-center">
           Why <span className="text-[#6ee7b7]">CosmoDrop</span>?
         </h2>
