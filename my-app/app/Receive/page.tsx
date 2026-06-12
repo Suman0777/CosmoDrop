@@ -32,18 +32,18 @@ export default function ReceivePage() {
           transition={{ duration: 0.5, ease: EASE }}
           className="space-y-2 text-center"
         >
-          <span className="text-sm font-semibold text-[#6ee7b7] tracking-wide text-start" >
            <button 
            onClick={(e)=>{
             router.push("/")
            }}
-           className="">
-              HomePage 
+           className="cursor-pointer text-lg font-semibold text-[#6ee7b7]/90 tracking-wide items-start bg-gray-600 px-2  rounded-xl ">
+              Go to HomePage ←
            </button>
-          </span>
+
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Receive <span className="text-[#6ee7b7]">Files</span>
           </h1>
+
           <p className="text-xs sm:text-sm leading-relaxed text-white/40 max-w-lg mx-auto">
             Join the sender's room with a 6-digit code, then download files
             directly and securely — no storage, no signup.
@@ -101,7 +101,7 @@ export default function ReceivePage() {
             </button>
 
             <button
-            className="text-[#6ee7b7] hover:text-green-300/60 text-sm font-medium"
+            className="text-[#6ee7b7] hover:text-green-300/60 text-[12px] font-mono"
             onClick={(e) => {             
               router.push("/Send");
             }}
@@ -119,7 +119,7 @@ export default function ReceivePage() {
           className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-5 flex flex-col gap-3"
         >
           <div className="flex items-center gap-2 text-white/40 text-xs font-semibold uppercase tracking-widest">
-            <CheckCircle2 size={12} className="text-green-700" />
+            <CheckCircle2 size={12} className="text-green-700 " />
             How to Receive
           </div>
 
