@@ -17,7 +17,7 @@ export function OtpInput({ value, onChange }: OtpInputProps) {
     const next = [...value];
     next[i] = char;
     onChange(next);
-    if (char && i < 5) focus(i + 1);
+    if (char && i < 4) focus(i + 1);
   };
 
   const handleKey = (i: number, e: KeyboardEvent<HTMLInputElement>) => {
@@ -31,17 +31,17 @@ export function OtpInput({ value, onChange }: OtpInputProps) {
       }
     } else if (e.key === "ArrowLeft" && i > 0) {
       focus(i - 1);
-    } else if (e.key === "ArrowRight" && i < 5) {
+    } else if (e.key === "ArrowRight" && i < 4) {
       focus(i + 1);
     }
   };
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6).split("");
-    const next = Array(6).fill("").map((_, i) => digits[i] ?? value[i] ?? "");
+    const digits = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 5).split("");
+    const next = Array(5).fill("").map((_, i) => digits[i] ?? value[i] ?? "");
     onChange(next);
-    focus(Math.min(digits.length, 5));
+    focus(Math.min(digits.length, 4));
   };
 
   return (

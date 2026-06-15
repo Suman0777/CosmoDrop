@@ -18,11 +18,15 @@ const steps = [
   { n: "3", text: "Upload files or folders to the room" },
 ];
 
-
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function SendPage() {
   const [roomCode, setRoomCode] = useState(["—", "—", "—", "—", "—"]);
+
+  const handleCopy = async () => {
+    const roomcodeNumber = roomCode.toString()
+    navigator.clipboard.writeText(roomcodeNumber);
+  };
 
   const handleCreateRoom = async () => {
     try {
@@ -81,7 +85,10 @@ export default function SendPage() {
               ))}
             </div>
 
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl border border-white/10 bg-white/[0.05] hover:border-[rgba(59,130,100,0.4)] hover:bg-[rgba(59,130,100,0.1)] text-white/50 hover:text-white text-xs font-medium transition-colors active:scale-95">
+            <button
+              onClick={handleCopy}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl border border-white/10 bg-white/[0.05] hover:border-[rgba(59,130,100,0.4)] hover:bg-[rgba(59,130,100,0.1)] text-white/50 hover:text-white text-xs font-medium transition-colors active:scale-95"
+            >
               <Copy size={13} />
               Copy
             </button>
@@ -120,10 +127,10 @@ export default function SendPage() {
 
           {/* buttons — full width on mobile, auto on larger */}
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
-            <button className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[rgba(59,130,100,0.7)] hover:bg-[rgba(59,130,100,1)] border border-[rgba(59,130,100,0.4)] text-white text-xs font-semibold transition-colors active:scale-95">
-              <FileUp size={13} />
+            <input placeholder="Selectfolder" className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[rgba(59,130,100,0.7)] hover:bg-[rgba(59,130,100,1)] border border-[rgba(59,130,100,0.4)] text-white text-xs font-semibold transition-colors active:scale-95"/>
+              {/* <FileUp size={13} />
               Select Files
-            </button>
+            </input> */}
             <button className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/15 text-white/70 hover:text-white text-xs font-semibold transition-colors active:scale-95">
               <FolderOpen size={13} />
               Select Folder

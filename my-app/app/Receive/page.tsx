@@ -7,7 +7,7 @@ import { OtpInput } from "@/components/ui/otp-input";
 import { useRouter } from "next/navigation";
 
 const steps = [
-  { n: "1", text: "Ask the sender for the 6-digit room code." },
+  { n: "1", text: "Ask the sender for the 5-digit room code." },
   { n: "2", text: "Enter the code below to join the active transfer room." },
   { n: "3", text: "Accept and download the incoming files instantly." },
 ];
@@ -15,7 +15,7 @@ const steps = [
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function ReceivePage() {
-  const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
+  const [digits, setDigits] = useState<string[]>(Array(5).fill(""));
   const isFull = digits.every((d) => d !== "");
   const router = useRouter();
 
@@ -45,7 +45,7 @@ export default function ReceivePage() {
           </h1>
 
           <p className="text-xs sm:text-sm leading-relaxed text-white/40 max-w-lg mx-auto">
-            Join the sender's room with a 6-digit code, then download files
+            Join the sender's room with a 5-digit code, then download files
             directly and securely — no storage, no signup.
           </p>
         </motion.div>
@@ -94,7 +94,7 @@ export default function ReceivePage() {
             <button
               className="w-[200px] py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white/25 hover:bg-white/[0.1] transition-colors"
               onClick={() => {
-                setDigits(Array(6).fill(""));
+                setDigits(Array(5).fill(""));
               }}
             >
               Clear Code
