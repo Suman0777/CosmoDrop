@@ -32,15 +32,19 @@ export default function ReceivePage() {
           transition={{ duration: 0.5, ease: EASE }}
           className="space-y-2 text-center"
         >
-           <button 
-           onClick={(e)=>{
-            router.push("/")
-           }}
-           className="cursor-pointer text-lg font-semibold text-[#6ee7b7]/90 tracking-wide items-start bg-gray-600 px-2  rounded-xl ">
-              Go to HomePage ←
-           </button>
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 3 }}
+            transition={{ duration: 0.5 }}
+            className=" cursor-pointer text-xs font-semibold tracking-widest uppercase text-[#6ee7b7] border border-[rgba(59,130,100,0.4)] rounded-full px-4 py-1 bg-[rgba(59,130,100,0.08)]"
+            onClick={(e) => {
+              router.push("/");
+            }}
+          >
+            Go to HomePage ←
+          </motion.span>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          <h1 className=" mt-3 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Receive <span className="text-[#6ee7b7]">Files</span>
           </h1>
 
@@ -101,12 +105,12 @@ export default function ReceivePage() {
             </button>
 
             <button
-            className="text-[#6ee7b7] hover:text-green-300/60 text-[12px] font-mono"
-            onClick={(e) => {             
-              router.push("/Send");
-            }}
+              className="text-[#6ee7b7] hover:text-green-300/60 text-[12px] font-mono"
+              onClick={(e) => {
+                router.push("/Send");
+              }}
             >
-              Create New Room ? 
+              Create New Room ?
             </button>
           </div>
         </motion.div>
