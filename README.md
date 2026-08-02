@@ -1,8 +1,8 @@
-# ShareFy
+# CosmoDrop
 
 ![Homepage](my-app/public/FrontPage.png)
 
-ShareFy is a real-time peer-to-peer file sharing web app. Create a room, share the 5-digit code with anyone in the world, and transfer files instantly through the browser — no sign-up required.
+CosmoDrop is a real-time peer-to-peer file sharing web app. Create a room, share the 5-digit code with anyone in the world, and transfer files instantly through the browser — no sign-up required.
 
 ---
 
@@ -23,7 +23,7 @@ ShareFy is a real-time peer-to-peer file sharing web app. Create a room, share t
 ## Project Structure
 
 ```
-ShareFy/
+CosmoDrop/
 ├── my-app/                     # Next.js frontend
 │   ├── app/
 │   │   ├── api/route.ts        # Room creation API
@@ -60,8 +60,8 @@ ShareFy/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/ShareFy.git
-cd ShareFy
+git clone https://github.com/your-username/CosmoDrop.git
+cd CosmoDrop
 ```
 
 ### 2. Install dependencies

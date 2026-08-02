@@ -1,8 +1,8 @@
-# ShareFy
+# CosmoDrop
 
 ![Homepage](public/FrontPage.png)
 
-ShareFy is a real-time peer-to-peer file sharing web app. Create a room, share the 5-digit code with anyone in the world, and transfer files instantly through the browser — no sign-up required.
+CosmoDrop is a real-time peer-to-peer file sharing web app. Create a room, share the 5-digit code with anyone in the world, and transfer files instantly through the browser — no sign-up required.
 
 ---
 
