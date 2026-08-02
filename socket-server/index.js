@@ -11,12 +11,11 @@ const rooms = new Map();
 
 io.on("connection", (socket) => {
   console.log("[socket] connected:", socket.id);
-  
+
   socket.on("join-room", (roomId) => {
     socket.join(roomId);
     if (!rooms.has(roomId)) rooms.set(roomId, new Set());
     rooms.get(roomId).add(socket.id);
-    console.log(`[socket] ${socket.id} joined room ${roomId} | members: ${rooms.get(roomId).size}`);
     socket.to(roomId).emit("user-joined");
     io.to(socket.id).emit("room-info", { count: rooms.get(roomId).size });
   });
@@ -49,7 +48,6 @@ io.on("connection", (socket) => {
 });
 
 const PORT = process.env.PORT || 3001;
-
 httpServer.listen(PORT, "0.0.0.0", () => {
   console.log(`[socket] server running on port ${PORT}`);
 });
