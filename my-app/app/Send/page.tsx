@@ -14,35 +14,27 @@ const steps = [
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function SendPage() {
-  const socketRef = useSocket();
+  const { socket, connected } = useSocket();
   const [roomCode, setRoomCode] = useState<string[]>(["—", "—", "—", "—", "—"]);
   const [currentRoom, setCurrentRoom] = useState<string | null>(null);
-  const [connected, setConnected] = useState(false);
   const [receiverJoined, setReceiverJoined] = useState(false);
   const [copied, setCopied] = useState(false);
   const [transferStatus, setTransferStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    const socket = socketRef.current;
     if (!socket) return;
-
-    socket.on("connect", () => setConnected(true));
-    socket.on("disconnect", () => { setConnected(false); setReceiverJoined(false); });
-    socket.on("user-joined", () => setReceiverJoined(true));
-    socket.on("user-left", () => setReceiverJoined(false));
-
-    // sync initial state
-    if (socket.connected) setConnected(true);
-
+    const onUserJoined = () => setReceiverJoined(true);
+    const onUserLeft = () => setReceiverJoined(false);
+    socket.on("user-joined", onUserJoined);
+    socket.on("user-left", onUserLeft);
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("user-joined");
-      socket.off("user-left");
+      socket.off("user-joined", onUserJoined);
+      socket.off("user-left", onUserLeft);
     };
-  }, [socketRef]);
+  }, [socket]);
 
   const handleCreateRoom = async () => {
+    if (!socket) return;
     try {
       const res = await fetch("/api", { method: "POST" });
       if (!res.ok) throw new Error("Failed to create room");
@@ -52,7 +44,7 @@ export default function SendPage() {
       setCurrentRoom(code);
       setReceiverJoined(false);
       setTransferStatus(null);
-      socketRef.current?.emit("join-room", code);
+      socket.emit("join-room", code);
     } catch (err) {
       console.error(err);
     }
@@ -66,12 +58,11 @@ export default function SendPage() {
   };
 
   const handleFile = (file: File) => {
-    if (!currentRoom) return;
-    const socket = socketRef.current;
-    if (!socket) return;
+    if (!currentRoom || !socket) return;
 
     const CHUNK = 64 * 1024; // 64 KB
     socket.emit("file-meta", { roomId: currentRoom, name: file.name, size: file.size, type: file.type });
+
 
     const reader = new FileReader();
     let offset = 0;
@@ -88,7 +79,7 @@ export default function SendPage() {
       socket.emit("file-chunk", { roomId: currentRoom, chunk: e.target.result });
       offset += CHUNK;
       if (offset < file.size) {
-        readChunk();
+        setTimeout(readChunk, 0); // yield to event loop between chunks
       } else {
         socket.emit("transfer-complete", currentRoom);
         setTransferStatus("✓ Transfer complete!");

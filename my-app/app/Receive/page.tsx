@@ -16,15 +16,13 @@ const steps = [
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function ReceivePage() {
-  const socketRef = useSocket();
+  const { socket, connected } = useSocket();
   const router = useRouter();
 
   const [digits, setDigits] = useState<string[]>(Array(5).fill(""));
-  const [connected, setConnected] = useState(false);
   const [joined, setJoined] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
 
-  // buffer for incoming file chunks
   const metaRef = useRef<{ name: string; size: number; type: string } | null>(null);
   const chunksRef = useRef<ArrayBuffer[]>([]);
 
@@ -32,24 +30,17 @@ export default function ReceivePage() {
   const roomCode = digits.join("");
 
   useEffect(() => {
-    const socket = socketRef.current;
     if (!socket) return;
 
-    socket.on("connect", () => setConnected(true));
-    socket.on("disconnect", () => { setConnected(false); setJoined(false); });
-    if (socket.connected) setConnected(true);
-
-    socket.on("file-meta", (data: { name: string; size: number; type: string }) => {
+    const onFileMeta = (data: { name: string; size: number; type: string }) => {
       metaRef.current = data;
       chunksRef.current = [];
       setStatus(`Receiving "${data.name}"…`);
-    });
-
-    socket.on("file-chunk", (data: { chunk: ArrayBuffer }) => {
+    };
+    const onFileChunk = (data: { chunk: ArrayBuffer }) => {
       chunksRef.current.push(data.chunk);
-    });
-
-    socket.on("transfer-complete", () => {
+    };
+    const onTransferComplete = () => {
       if (!metaRef.current) return;
       const blob = new Blob(chunksRef.current, { type: metaRef.current.type });
       const url = URL.createObjectURL(blob);
@@ -61,20 +52,22 @@ export default function ReceivePage() {
       setStatus(`✓ "${metaRef.current.name}" downloaded!`);
       chunksRef.current = [];
       metaRef.current = null;
-    });
+    };
+
+    socket.on("file-meta", onFileMeta);
+    socket.on("file-chunk", onFileChunk);
+    socket.on("transfer-complete", onTransferComplete);
 
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("file-meta");
-      socket.off("file-chunk");
-      socket.off("transfer-complete");
+      socket.off("file-meta", onFileMeta);
+      socket.off("file-chunk", onFileChunk);
+      socket.off("transfer-complete", onTransferComplete);
     };
-  }, [socketRef]);
+  }, [socket]);
 
   const handleJoin = () => {
-    if (!isFull) return;
-    socketRef.current?.emit("join-room", roomCode);
+    if (!isFull || !socket) return;
+    socket.emit("join-room", roomCode);
     setJoined(true);
     setStatus("Joined room · waiting for sender…");
   };
