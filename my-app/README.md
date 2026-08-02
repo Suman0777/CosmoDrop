@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ShareFy
+
+![Homepage](public/FrontPage.png)
+
+ShareFy is a real-time peer-to-peer file sharing web app. Create a room, share the 5-digit code with anyone in the world, and transfer files instantly through the browser — no sign-up required.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Animations | Motion (Framer Motion) |
+| Real-time | Socket.io Client |
+| Components | shadcn/ui + Radix UI |
+| Icons | Lucide React |
+
+---
+
+## Project Structure
+
+```
+my-app/
+├── app/
+│   ├── api/route.ts        # Room creation API
+│   ├── Send/page.tsx       # Send file page
+│   ├── Receive/page.tsx    # Receive file page
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Home page
+├── components/
+│   └── ui/                 # Reusable UI components
+├── lib/
+│   └── use-socket.ts       # Socket.io client hook
+├── public/                 # Static assets
+└── .env.local              # Environment variables
+```
+
+---
+
+## How to Use
+
+1. Open the app and click **Send Files**
+2. Click **Create Room** — a 5-digit room code is generated
+3. Share the code with the recipient
+4. Recipient opens the app, goes to **Receive Files**, and enters the code
+5. Upload a file — transfer starts instantly
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Set environment variable
+
+In `.env.local`:
+
+```env
+NEXT_PUBLIC_SOCKET_URL=https://your-socket-server.up.railway.app
+```
+
+### 3. Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## NPM Commands
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Next.js dev server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
